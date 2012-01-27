@@ -1,0 +1,8 @@
+#! /bin/sh
+if test $# != 0  
+  then echo 'usage: svn_log'
+  else 
+     svn log svn+ssh://svn_go/home/svn/go
+fi
+
+

@@ -1,0 +1,810 @@
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/AggressiveExpand.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/AggressiveExpand.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/BorderSeal.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable W used only once
+%**
+%** in file "./lobes/BorderSeal.oz", line 22, column 39
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable W used only once
+%**
+%** in file "./lobes/BorderSeal.oz", line 25, column 39
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/BorderSeal.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/ClusterAttack.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/ClusterAttack.oz", line 2, column 33
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/ClusterDefend.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/ClusterDefend.oz", line 2, column 33
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Opposite used only once
+%**
+%** in file "./lobes/ClusterDefend.oz", line 5, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Colonize.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/Colonize.oz", line 2, column 31
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Connect.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/Connect.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Connect.oz", line 2, column 27
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/DiagonalDelay.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/DiagonalDelay.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/DontFillInEyes.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/DontFillInEyes.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/DontFillInEyes.oz", line 2, column 40
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Expand.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Expand.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Field.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Field.oz", line 2, column 30
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Fork.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Fork.oz", line 2, column 30
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/IncreaseArcInfl.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable A used only once
+%**
+%** in file "./lobes/IncreaseArcInfl.oz", line 11, column 39
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable A used only once
+%**
+%** in file "./lobes/IncreaseArcInfl.oz", line 26, column 45
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/IncreaseArcInfl.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/InfluenceConflict.oz
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable StoneList
+%**
+%** in file "./lobes/InfluenceConflict.oz", line 10, column 12
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Color used only once
+%**
+%** in file "./lobes/InfluenceConflict.oz", line 95, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/InfluenceConflict.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/InfluenceConflict.oz", line 2, column 49
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Killer.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Killer.oz", line 2, column 20
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/LibertyCheck.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable CheckColor used only once
+%**
+%** in file "./lobes/LibertyCheck.oz", line 10, column 14
+
+%******************** binding analysis warning ******************
+%**
+%** local variable CheckWeight used only once
+%**
+%** in file "./lobes/LibertyCheck.oz", line 13, column 14
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ClusterTools used only once
+%**
+%** in file "./lobes/LibertyCheck.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable SimpleBoard used only once
+%**
+%** in file "./lobes/LibertyCheck.oz", line 2, column 33
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/LibertyCheck.oz", line 2, column 45
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/LibertyIncrease.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/LibertyIncrease.oz", line 2, column 30
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ClusterTools used only once
+%**
+%** in file "./lobes/LibertyIncrease.oz", line 2, column 37
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/LibertyIncrease.oz", line 2, column 50
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Opposite used only once
+%**
+%** in file "./lobes/LibertyIncrease.oz", line 5, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/MakeEye.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/MakeEye.oz", line 2, column 43
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Suicide.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/Suicide.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Suicide.oz", line 2, column 27
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/TerritorySuicide.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/TerritorySuicide.oz", line 2, column 30
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file lobes/Threaten.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/Threaten.oz", line 2, column 30
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file AIGui.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Useless used only once
+%**
+%** in file "./AIGui.oz", line 72, column 28
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable TCol
+%**
+%** in file "./AIGui.oz", line 136, column 21
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable ColorUseless used only once
+%**
+%** in file "./AIGui.oz", line 135, column 17
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable InfluenceList
+%**
+%** in file "./AIGui.oz", line 155, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable ExtraSign
+%**
+%** in file "./AIGui.oz", line 155, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Color used only once
+%**
+%** in file "./AIGui.oz", line 171, column 28
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Useless used only once
+%**
+%** in file "./AIGui.oz", line 208, column 17
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Useless used only once
+%**
+%** in file "./AIGui.oz", line 228, column 18
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./AIGui.oz", line 5, column 3
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./AIGui.oz", line 5, column 11
+
+%******************** binding analysis warning ******************
+%**
+%** local variable InfluenceDrawClamp used only once
+%**
+%** in file "./AIGui.oz", line 17, column 0
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file ArctanInfl.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./ArctanInfl.oz", line 2, column 10
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file Brain.oz
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable GeneticID
+%**
+%** in file "./Brain.oz", line 110, column 9
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable GameTime
+%**
+%** in file "./Brain.oz", line 160, column 3
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./Brain.oz", line 3, column 35
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file ClusterTools.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Col used only once
+%**
+%** in file "./ClusterTools.oz", line 43, column 37
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Col used only once
+%**
+%** in file "./ClusterTools.oz", line 52, column 37
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./ClusterTools.oz", line 3, column 10
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Set used only once
+%**
+%** in file "./ClusterTools.oz", line 3, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Surrounding used only once
+%**
+%** in file "./ClusterTools.oz", line 337, column 9
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file EmptyLobe.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./EmptyLobe.oz", line 2, column 10
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file GeneticAlgorithm_GUI.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable BrowseBlackButton used only once
+%**
+%** in file "./GeneticAlgorithm_GUI.oz", line 78, column 9
+
+%******************** binding analysis warning ******************
+%**
+%** local variable BrowseWhiteButton used only once
+%**
+%** in file "./GeneticAlgorithm_GUI.oz", line 79, column 9
+% -------------------- accepted
+%%% feeding file GuiBoard.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable SClr used only once
+%**
+%** in file "./GuiBoard.oz", line 290, column 29
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./GuiBoard.oz", line 4, column 15
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./GuiBoard.oz", line 4, column 25
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file Initiator.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./Initiator.oz", line 5, column 24
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file JAZTools.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ProcessManhattanDistance used only once
+%**
+%** in file "./JAZTools.oz", line 255, column 9
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file PlayBoard.oz
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable StoneList
+%**
+%** in file "./PlayBoard.oz", line 251, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable ClusterList
+%**
+%** in file "./PlayBoard.oz", line 251, column 16
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./PlayBoard.oz", line 3, column 39
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./PlayBoard.oz", line 4, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file Server.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable CommandProc used only once
+%**
+%** in file "./Server.oz", line 113, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable E used only once
+%**
+%** in file "./Server.oz", line 190, column 12
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable OldColor used only once
+%**
+%** in file "./Server.oz", line 348, column 29
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./Server.oz", line 3, column 47
+
+%******************** binding analysis warning ******************
+%**
+%** local variable JAZTools used only once
+%**
+%** in file "./Server.oz", line 3, column 54
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Open used only once
+%**
+%** in file "./Server.oz", line 5, column 6
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file SimpleBoard.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable R used only once
+%**
+%** in file "./SimpleBoard.oz", line 46, column 9
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable C used only once
+%**
+%** in file "./SimpleBoard.oz", line 46, column 11
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Dist used only once
+%**
+%** in file "./SimpleBoard.oz", line 46, column 13
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Pr used only once
+%**
+%** in file "./SimpleBoard.oz", line 8, column 0
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file SimpleBoard2.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable R used only once
+%**
+%** in file "./SimpleBoard2.oz", line 44, column 9
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable C used only once
+%**
+%** in file "./SimpleBoard2.oz", line 44, column 11
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Dist used only once
+%**
+%** in file "./SimpleBoard2.oz", line 44, column 13
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file Talker.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Head used only once
+%**
+%** in file "./Talker.oz", line 139, column 26
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable E used only once
+%**
+%** in file "./Talker.oz", line 156, column 15
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable AtomCommand used only once
+%**
+%** in file "./Talker.oz", line 186, column 30
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable AtomCommand used only once
+%**
+%** in file "./Talker.oz", line 201, column 30
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable Color
+%**
+%** in file "./Talker.oz", line 234, column 21
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file TalkerTools.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./TalkerTools.oz", line 2, column 10
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file Territory.oz
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable B
+%**
+%** in file "./Territory.oz", line 99, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** unused local variable W
+%**
+%** in file "./Territory.oz", line 99, column 8
+
+%******************** binding analysis warning ******************
+%**
+%** local variable PlayBoard used only once
+%**
+%** in file "./Territory.oz", line 3, column 7
+
+%******************** binding analysis warning ******************
+%**
+%** local variable JAZTools used only once
+%**
+%** in file "./Territory.oz", line 3, column 17
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./Territory.oz", line 3, column 26
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Application used only once
+%**
+%** in file "./Territory.oz", line 3, column 33
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./Territory.oz", line 3, column 45
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file PlayBoardAndGuiTest.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable LTwo used only once
+%**
+%** in file "./PlayBoardAndGuiTest.oz", line 59, column 8
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file SmartBoardAndGuiTest.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable LTwo used only once
+%**
+%** in file "./SmartBoardAndGuiTest.oz", line 61, column 8
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file TestClusterTools.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./TestClusterTools.oz", line 3, column 45
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Pr used only once
+%**
+%** in file "./TestClusterTools.oz", line 10, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file TestPlayBoard.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable R used only once
+%**
+%** in file "./TestPlayBoard.oz", line 29, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable C used only once
+%**
+%** in file "./TestPlayBoard.oz", line 29, column 29
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Clr used only once
+%**
+%** in file "./TestPlayBoard.oz", line 29, column 31
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./TestPlayBoard.oz", line 4, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./TestPlayBoard.oz", line 4, column 13
+
+%******************** binding analysis warning ******************
+%**
+%** local variable R1d used only once
+%**
+%** in file "./TestPlayBoard.oz", line 20, column 18
+
+%******************** binding analysis warning ******************
+%**
+%** local variable B4 used only once
+%**
+%** in file "./TestPlayBoard.oz", line 24, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file PlayGoGenetic.oz
+
+%******************** binding analysis warning ******************
+%**
+%** pattern variable Head used only once
+%**
+%** in file "./PlayGoGenetic.oz", line 35, column 15
+% -------------------- accepted

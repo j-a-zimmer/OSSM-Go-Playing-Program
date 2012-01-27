@@ -1,0 +1,3 @@
+#! /bin/sh
+svn $1 svn+ssh://svn_go/home/svn/go/$2 $3
+

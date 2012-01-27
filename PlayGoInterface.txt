@@ -1,0 +1,12 @@
+Move is either pass or an tuple R#C$Color
+
+A class implements a "player" interface if it has two methods 
+
+    init(PlayBoard Color)
+
+    decide(Opponents_Move ?My_Move)
+
+Players may assume they are being given their own copy of a playboard
+with a external put action that has been set to nil.
+
+
