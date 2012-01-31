@@ -328,7 +328,8 @@ class SBoard from SimBoard
       R#C#_#_ | _ = {self history($)}
    in
       SimBoard,retract
-      {New RebuildClusters reactToChange(self R C) _}
+      %{New RebuildClusters reactToChange(self R C) _}  -- probably was error
+      {New RebuildClusters initializeAll(self) _}
    end
 
    meth kill( Lst ) 
@@ -337,14 +338,11 @@ class SBoard from SimBoard
         in
          if(SimBoard,get(R C $)\= vacant) then
              SimBoard,put(R C vacant)
-             % {New RebuildClusters reactToChange(self R C) _}
-             % inefficient here?
-             % broken reactToChange?
+             {New RebuildClusters reactToChange(self R C) _}
          end
       end
    in % kill
       {List.forAll Lst KillOne}
-      {New RebuildClusters initializeAll(self) _}
    end % kill
 
    meth reset(StoneList)  % sets all board positions to vacant

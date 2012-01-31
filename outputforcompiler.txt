@@ -436,6 +436,12 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
 %******************** binding analysis warning ******************
 %**
+%** local variable System used only once
+%**
+%** in file "./ClusterTools.oz", line 3, column 31
+
+%******************** binding analysis warning ******************
+%**
 %** local variable Surrounding used only once
 %**
 %** in file "./ClusterTools.oz", line 347, column 9
@@ -669,6 +675,22 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %** pattern variable Dist used only once
 %**
 %** in file "./SimpleBoard2.oz", line 44, column 13
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
+%%% feeding file SmartBoard.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable R used only once
+%**
+%** in file "./SmartBoard.oz", line 328, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** local variable C used only once
+%**
+%** in file "./SmartBoard.oz", line 328, column 8
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 

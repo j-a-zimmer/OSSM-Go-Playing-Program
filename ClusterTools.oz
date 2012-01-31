@@ -36,7 +36,7 @@ define
       Cluster = {Board cluster(BP.1 BP.2 $)}
    in
      if Cluster.color==vacant then
-	 if Col == black then
+	 if Col == black then 
             Ret = {And {List.length Cluster.whiteNeighbors}==0 
                      {And {List.length Cluster.blackNeighbors} \=0
                         {List.all Cluster.blackNeighbors 
@@ -91,7 +91,8 @@ define
 		   false
 	    else
            {IsEye Board C.stones.1 Cluster.color $}
-        end
+       end
+    end
 
          Helper2 = fun { $ VC}
             
