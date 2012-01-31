@@ -41,9 +41,9 @@ define
                      {And {List.length Cluster.blackNeighbors} \=0
                         {List.all Cluster.blackNeighbors 
                           fun {$ R#C#Col} 
-                             if {Board cluster(R C $)}==vacant then
+                             if {Board cluster(R C $)}.color==vacant then
 						 	    {Browser.browse errorInClusterToolsLine45}
-								true
+								false
 							 else
 							    {List.length {Board cluster(R C $)}.liberties}>1
 						     end
@@ -55,9 +55,9 @@ define
                       {And {List.length Cluster.whiteNeighbors} \=0
                         {List.all Cluster.whiteNeighbors 
                           fun {$ R#C#Col} 
-                             if {Board cluster(R C $)}==vacant then
+                             if {Board cluster(R C $)}.color==vacant then
 						 	    {Browser.browse errorInClusterToolsLine45}
-								true
+								false
 							 else
 							    {List.length {Board cluster(R C $)}.liberties}>1
 						     end
@@ -87,12 +87,11 @@ define
       else
 	 Helper = fun {$ C}
 	    if {Board cluster(C.stones.1.1 C.stones.1.2 $)}.color \= vacant then
-	       {System.show '1st'#C.color}
-	       {System.show {Board get(C.stones.1.1 C.stones.1.2 $)}}
-	       {System.show '2nd'#{Board cluster(C.stones.1.1 C.stones.1.2 $)}.stones}
-	    end
-            {IsEye Board C.stones.1 Cluster.color $}
-         end
+	       {Browser.browse errorInClusterToolsLine90}
+		   false
+	    else
+           {IsEye Board C.stones.1 Cluster.color $}
+        end
 
          Helper2 = fun { $ VC}
             
