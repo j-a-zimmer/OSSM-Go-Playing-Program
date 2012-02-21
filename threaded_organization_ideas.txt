@@ -1,0 +1,89 @@
+currently brain asks lobes for weights
+lobes handle their own lookaheads with ad hoc methods
+
+----------------------------------------------
+
+new base class for lobe would not do lookaheads and 
+would contain these methods
+
+mark
+restore
+clear_weights
+add_weight
+
+as well as board accessors
+   get
+   getCluster
+   isOnBoard
+   isOnEdge
+   boardSize (? not currently avaiable)
+   manhattanDistance  (why?)
+   (other accessors?)
+
+a subclass of the lobe baseclass keeps its own board object and
+has 
+
+mark
+restore 
+clear_weights
+add_weight % adds weight to particular board position
+           % can change this weight
+
+as well as all the methods available to playBoard
+
+mark takes
+    a record that involves any state info lobe wants restored
+    a function capable of resetting lobe to that state
+    a function capable of updating that state as a response to
+      a single move that doesn't involve killing anything
+    a function capable of recalculating that state from scratch
+      for any given board position
+
+lobes have these instance variables
+
+    weights
+    unprocessed_move
+
+lobes have these methods
+
+    run ( lobe_action_proc )
+        runs the lobe_action_proc in a loop like this
+
+             waits for to be nonnull, makes the move and clears unprocessed_move
+             clear weight
+             runs lobe_action_proc
+             recurses
+
+    getWeights ()
+        
+         used by brain to get weights
+
+    reportMove
+      
+         used by brain to report move
+
+
+    lobe_while  (method used within lobe_action_proc)
+
+         implements a while loop that tests for nonnull unprocessed_move
+         each iteration and throws an exception leading restarting the run
+         loop if nonnull
+
+    add_weight (method used within lobe_action_probe)
+
+         adds a weight to weight list
+
+    look_ahead ( wanta_look_at, evaluate_board )
+         executes evaluate_board on all vacant board positions that we want
+         to look at
+
+         checks for nonnull unprocessed_move at "strategic" points in its
+         execution and throws exceptino as with lobe_while
+
+first stage of transition
+
+    write look_ahead without the exception throwing and get it running
+    in lobes that do lookaheads
+
+
+
