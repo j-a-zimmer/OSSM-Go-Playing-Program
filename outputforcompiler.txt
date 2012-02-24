@@ -42,6 +42,28 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
+%%% feeding file lobes/ChangeNumTerritories.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/ChangeNumTerritories.oz", line 2, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ArctanInfl used only once
+%**
+%** in file "./lobes/ChangeNumTerritories.oz", line 2, column 34
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/ChangeNumTerritories.oz", line 2, column 45
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
 %%% feeding file lobes/ClusterAttack.oz
 
 %******************** binding analysis warning ******************
@@ -178,6 +200,28 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
+%%% feeding file lobes/IncreaseTerritorySpace.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/IncreaseTerritorySpace.oz", line 2, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ArctanInfl used only once
+%**
+%** in file "./lobes/IncreaseTerritorySpace.oz", line 2, column 34
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Browser used only once
+%**
+%** in file "./lobes/IncreaseTerritorySpace.oz", line 2, column 45
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
 %%% feeding file lobes/InfluenceConflict.oz
 
 %******************** binding analysis warning ******************
@@ -292,6 +336,34 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
+%%% feeding file lobes/TerritorySeal.oz
+
+%******************** binding analysis warning ******************
+%**
+%** local variable AdjSpaces used only once
+%**
+%** in file "./lobes/TerritorySeal.oz", line 29, column 6
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/TerritorySeal.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ArctanInfl used only once
+%**
+%** in file "./lobes/TerritorySeal.oz", line 2, column 27
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Opposite used only once
+%**
+%** in file "./lobes/TerritorySeal.oz", line 5, column 3
+% -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
 %%% feeding file lobes/TerritorySuicide.oz
 
 %******************** binding analysis warning ******************
@@ -398,19 +470,31 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %**
 %** unused local variable GeneticID
 %**
-%** in file "./Brain.oz", line 115, column 9
+%** in file "./Brain.oz", line 120, column 9
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable GameTime
 %**
-%** in file "./Brain.oz", line 165, column 3
+%** in file "./Brain.oz", line 170, column 3
 
 %******************** binding analysis warning ******************
 %**
 %** local variable Browser used only once
 %**
 %** in file "./Brain.oz", line 3, column 35
+
+%******************** binding analysis warning ******************
+%**
+%** local variable ChangeNumTerritories used only once
+%**
+%** in file "./Brain.oz", line 17, column 17
+
+%******************** binding analysis warning ******************
+%**
+%** local variable IncreaseTerritorySpace used only once
+%**
+%** in file "./Brain.oz", line 18, column 3
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 

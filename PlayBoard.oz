@@ -356,7 +356,7 @@ class PBoard from SmartBoard.sBoard
    end
 
 %%%%%%%%%%%%%%%%%%%%%%%%% PSEUDO TERRITORIES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-   %   Following are 6 methods for finding pseudo territories:
+   %   Following are 8 methods for finding pseudo territories:
    %      getManhatTerrArray
    %      getManhatTerrCluster
    %      getManhatTerrClusters
@@ -367,10 +367,11 @@ class PBoard from SmartBoard.sBoard
    %      getArctanTerr
    
    %   They give an array of control over the entire board,
-   %             a cluster of all spaces in a Psuedo Territory, and
+   %             a cluster of all spaces in a Psuedo Territory, 
+   %             a list of all territory clusters on the board, and
    %             the color controlling a specific point
    
-   %   These 3 things are defined using Manhattan influence and Arctan Influence.
+   %   These 4 things are defined using Manhattan influence and Arctan Influence.
    
    %   Arctan influence is generally more accurate towards the start of the game
    %      and manhattan better in late game.
@@ -407,7 +408,7 @@ class PBoard from SmartBoard.sBoard
 			end
 		 end
 	  end
-	  Clst = {Get @((self.arctanTerrCache).clusterArray) R*Size+C}
+	  Clst = {Get @((self.manhatTerrCache).clusterArray) R*Size+C}
    end
    
    meth getManhatTerrClusters(?CLst)
@@ -456,7 +457,7 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth getArctanTerr(R C ?Col)
-      Ary = {self getManhatTerrArray($)}
+      Ary = {self getArctanTerrArray($)}
    in
 	  Col = if {Get Ary R*{self size($)}+C}==1 then
 	           black
