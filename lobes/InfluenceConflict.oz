@@ -3,6 +3,7 @@ functor
    export InfluenceConflict
    
 define
+   %Not in use
    class InfluenceConflict from EmptyLobe.lobe
       meth formulateWeights(Board Col ?Lst)
 

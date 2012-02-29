@@ -291,7 +291,7 @@ end % class InternalCluster
 class SBoard from SimBoard
    feat clusters
        
-   meth init(Size InitialStones PutAction<=_)  % initialize a SmartBoard
+   meth init(Size InitialStones PutAction<=_ State<=_)  % initialize a SmartBoard
       proc {PutBorders}
         %% the border is an extra layer of board positions outside
         %% the playable positions; InternalClusters there have the
@@ -312,7 +312,22 @@ class SBoard from SimBoard
       self.playSize = Size
      self.size = Size+2
      SimBoard,init(Size InitialStones PutAction)
-     self.clusters = {Array.new 0 self.size*self.size-1 nil}
+     if {IsDet State} then
+	    fun{ListToArray Low#High#Lst}
+	        L = {NewCell Lst}
+	        A = {NewArray Low High nil}
+	     in
+		    for I in Low..High do
+		       {A.put Low (@Lst).1}
+			   L := (@L).2
+		    end
+		    A
+	     end
+	 in
+	    self.clusters = {ListToArray (State.clusters)}
+	 else
+	    self.clusters = {Array.new 0 self.size*self.size-1 nil}
+	 end
      {PutBorders}
      {New RebuildClusters initializeAll(self) _}
    end % init

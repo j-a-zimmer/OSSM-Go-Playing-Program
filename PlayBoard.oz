@@ -29,13 +29,118 @@ class PBoard from SmartBoard.sBoard
 		manhatTerrCache
 		arctanTerrCache
 
-   meth init(Size InitialStones PutAction<=_) 
-      SmartBoard.sBoard, init( Size InitialStones PutAction )
-      self.influenceCacheBoard = cacheBoard(white:{NewCell _} black:{NewCell _})
-      self.influenceCacheList = cacheList(white:{NewCell _} black:{NewCell _})
-	  self.arctanInfluenceCache = {NewCell _}
-	  self.manhatTerrCache = cacheBoard(array:{NewCell _} clusterArray:{NewCell _} clusters:{NewCell nil})
-	  self.arctanTerrCache = cacheBoard(array:{NewCell _} clusterArray:{NewCell _} clusters:{NewCell nil})
+   meth init(Size InitialStones State<=_) 
+	  if {IsDet State} then
+	  
+	     fun{ListToArray Low#High#Lst}
+	        L = {NewCell Lst}
+	        A = {NewArray Low High nil}
+	     in
+		    for I in Low..High do
+		       {A.put Low (@Lst).1}
+		  	   L := (@L).2
+		    end
+		    A
+	     end
+		 fun{ListToBoard Lst}
+		    B = {New SimpleBoard.board init(self.playSize nil _)}
+			L = {NewCell Lst}
+		 in
+		    for R in 1..{self size($)} do
+			   for C in 1..{self size($)} do
+			      {B setWeight(R C (@L).1)}
+				  L := (@L).2
+			   end
+			end
+			B
+		 end
+      in
+         SmartBoard.sBoard, init( Size InitialStones _ State)
+	  
+	     % Set caching to values in State
+	  
+         self.influenceCacheBoard = cacheBoard(white:{NewCell {ListToBoard State.influenceCacheBoard.white}} 
+	                                           black:{NewCell {ListToBoard State.influenceCacheBoard.black}}  )
+											
+         self.influenceCacheList = cacheList(white:{NewCell (State.influenceCacheList.white)} 
+	                                         black:{NewCell (State.influenceCacheList.black)}  )
+										  
+	     self.arctanInfluenceCache = {NewCell (State.arctanInfluenceCache)}
+	  
+	     self.manhatTerrCache = cacheInfo(array:{NewCell {ListToArray (State.manhatTerrCache.array)}}
+	                                      clusterArray:{NewCell {ListToArray (State.manhatTerrCache.clusterArray)}}
+	  								      clusters:{NewCell (State.manhatTerrCache.clusters)}  )
+									   
+	     self.arctanTerrCache = cacheInfo(array:{NewCell {ListToArray (State.arctanTerrCache.array)}}
+	                                      clusterArray:{NewCell {ListToArray (State.arctanTerrCache.clusterArray)}}
+								  	      clusters:{NewCell (State.arctanTerrCache.clusters)}  )
+										  
+	  else
+	  
+	     SmartBoard.sBoard, init( Size InitialStones )
+         self.influenceCacheBoard = cacheBoard(white:{NewCell _} black:{NewCell _})
+         self.influenceCacheList = cacheList(white:{NewCell _} black:{NewCell _})
+	     self.arctanInfluenceCache = {NewCell _}
+	     self.manhatTerrCache = cacheInfo(array:{NewCell _} clusterArray:{NewCell _} clusters:{NewCell nil})
+	     self.arctanTerrCache = cacheInfo(array:{NewCell _} clusterArray:{NewCell _} clusters:{NewCell nil})
+		 
+	  end
+   end
+   
+   meth getState(State)
+   
+      fun{ArrayToList A}
+	     Low = {Array.low A}
+		 High = {Array.high A}
+		 fun{Recurs I}
+		    if I>High then
+			   nil
+			else
+			   {Array.get A I}|{Recurs I+1}
+			end
+		 end
+	  in
+	     Low#High#{Recurs Low}
+	  end
+	  
+	  fun{BoardToList B}
+	     Lst = {NewCell nil}
+	  in
+	     for R in 1..{self size($)} do
+		    for C in 1..{self size($)} do
+			   Lst := {B getWeight(R C $)}|(@Lst)
+			end
+         end
+	     @Lst
+	  end
+   
+      InitialStones = {NewCell nil}
+   in
+	  for R in 1..{self size($)} do
+	     for C in 1..{self size($)} do
+		    Color = {self get(R C $)} 
+		 in
+		    if {Not Color==vacant} then
+		       InitialStones := (R#C#Color)|@InitialStones
+		    end
+	     end
+	  end
+      State = state(clusters: {ArrayToList self.clusters}
+	                initialStones: @InitialStones
+					size: {self size($)}
+	  
+	                influenceCacheBoard: cacheBoard(white:{BoardToList @(self.influenceCacheBoard.white)}
+					                                black:{BoardToList @(self.influenceCacheBoard.black)} )
+                    influenceCacheList:  cacheBoard(white: @(self.influenceCacheList.white)
+					                                black: @(self.influenceCacheList.black)  )
+                    arctanInfluenceCache: @(self.arctanInfluenceCache)
+					manhatTerrCache: cacheInfo(array: {ArrayToList @(self.manhatTerrCache.array)}
+					                           clusterArray:{ArrayToList @(self.manhatTerrCache.clusterArray)}
+											   clusters:@(self.manhatTerrCache).clusters  )
+                    arctanTerrCache: cacheInfo(array: {ArrayToList @(self.arctanTerrCache.array)}
+					                           clusterArray:{ArrayToList @(self.arctanTerrCache.clusterArray)}
+											   clusters:@(self.arctanTerrCache).clusters  )
+                    )
    end
    
    %% RetractMove method added by Irving Dai, Feb. 16
@@ -50,6 +155,7 @@ class PBoard from SmartBoard.sBoard
             SimpleBoard.board, retract
             {self retractMove}
          else
+            {self wipeCache}
             {self retract}
          end
       end
@@ -188,17 +294,7 @@ class PBoard from SmartBoard.sBoard
    meth play(R C Clr Played<='not needed')
       Valid Killed
    in
-      ((self.influenceCacheBoard).white) := _
-      ((self.influenceCacheBoard).black) := _
-      ((self.influenceCacheList).black) := _
-      ((self.influenceCacheList).white) := _
-	  (self.arctanInfluenceCache) := _
-	  ((self.arctanTerrCache).array) := _
-	  ((self.arctanTerrCache).clusterArray) := _
-	  ((self.arctanTerrCache).clusters) := nil
-	  ((self.manhatTerrCache).array) := _
-	  ((self.manhatTerrCache).clusterArray) := _
-	  ((self.manhatTerrCache).clusters) := nil
+      {self wipeCache}
       
       {self analyze(R C Clr Valid Killed)}
       if Valid then
@@ -227,7 +323,6 @@ class PBoard from SmartBoard.sBoard
 	      Ret = {New PBoard init({self size($)} @Lst _)}
       end
    end
-
    %% If a position is on the board
    meth isValidPos(Pos ?B)
 
@@ -237,7 +332,35 @@ class PBoard from SmartBoard.sBoard
       else B=true
       end
    end
-
+   
+   meth wipeCache
+      ((self.influenceCacheBoard).white) := _
+      ((self.influenceCacheBoard).black) := _
+      ((self.influenceCacheList).black) := _
+      ((self.influenceCacheList).white) := _
+	  (self.arctanInfluenceCache) := _
+	  ((self.arctanTerrCache).array) := _
+	  ((self.arctanTerrCache).clusterArray) := _
+	  ((self.arctanTerrCache).clusters) := nil
+	  ((self.manhatTerrCache).array) := _
+	  ((self.manhatTerrCache).clusterArray) := _
+	  ((self.manhatTerrCache).clusters) := nil
+   end
+   
+   meth fillCaches
+     {self wipeCache}
+	  
+	 %Refill the cache
+      {self influence(white _)}
+	  {self influence(black _)}
+	  (self.arctanInfluenceCache) := {ArctanInfl.findInfl self}
+	  {self getArctanTerrCluster(1 1 _)}
+	  {self getManhatTerrCluster(1 1 _)}
+   end
+   
+   %%%%  EVERYTHING BELOW HERE IS OLD CACHING STUFF THAT NEEDS TO BE UPDATED OR REMOVED  %%%%
+   %%%% influence, getArctanTerrCluster, and getManhatTerrCluster methods are used above %%%%
+   
    %% Gets influenced positions due to a single stone
    meth getInfluencedPositions(R C Clr $)
      EClr = Opposite.Clr
