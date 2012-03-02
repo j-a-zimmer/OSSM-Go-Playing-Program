@@ -23,7 +23,12 @@ define
    
    class Brain
       
-      feat size color pBoard gBoard talker human lobes lobeWeights genetic
+      feat size color pBoard gBoard 
+	       talker human lobes lobeWeights genetic
+		   workTime9: 3000
+		   workTime13: 5000
+		   workTime19: 7000
+		   workTimeOddSize: 5000
       
       meth init()
          proc {LobeInitializer List WList ?R}
@@ -227,16 +232,14 @@ define
 			      {GetValues LobeT LobeWeightT}
 			   end
 			else
-			   {System.show 'Done Getting Values'}
 			   nil
 			end
          end % fun GetValues
 		 
       in
-	     {System.show 'Starting To Get Values'}
 		 {self.pBoard fillCaches}
 		 {UpdateAllLobes self.lobes {self.pBoard getState($)}}
-		 {Wait 50000}
+		 {self DelayBasedOnBoardSize}
          Lst = {JAZTools.weightedSort 
                    {JAZTools.compactList 
                        {List.flatten {GetValues self.lobes self.lobeWeights $}} 
@@ -250,6 +253,14 @@ define
                                        self.color 
                  )#0.4 ]
       end % meth Random
-	 
+	  
+	  meth DelayBasedOnBoardSize
+	     case {self.pBoard size($)}
+		 of 9 then {Delay self.workTime9}
+		 [] 13 then {Delay self.workTime13}
+		 [] 19 then {Delay self.workTime19}
+		 else {Delay self.workTimeOddSize} end
+	  end
+	  
    end % class Brain
 end

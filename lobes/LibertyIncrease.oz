@@ -25,7 +25,7 @@ define
 			      end
 				  
 		       in
-                  {self lookAhead(R C Col Board LibDecrease $)}
+                  {self lookAhead(R C LibDecrease $)}
                else false
                end
             else

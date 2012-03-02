@@ -318,7 +318,7 @@ class SBoard from SimBoard
 	        A = {NewArray Low High nil}
 	     in
 		    for I in Low..High do
-		       {A.put Low (@Lst).1}
+		       {Array.put A Low (@L).1}
 			   L := (@L).2
 		    end
 		    A

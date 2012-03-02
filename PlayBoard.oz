@@ -30,14 +30,18 @@ class PBoard from SmartBoard.sBoard
 		arctanTerrCache
 
    meth init(Size InitialStones State<=_) 
-	  if {IsDet State} then
+      %For information about what State is, see the getState method
 	  
+	  if {IsDet State} then
+	     
+		 %init if state is provided
+		 
 	     fun{ListToArray Low#High#Lst}
 	        L = {NewCell Lst}
 	        A = {NewArray Low High nil}
 	     in
 		    for I in Low..High do
-		       {A.put Low (@Lst).1}
+		       {Array.put A Low (@L).1}
 		  	   L := (@L).2
 		    end
 		    A
@@ -67,7 +71,7 @@ class PBoard from SmartBoard.sBoard
 										  
 	     self.arctanInfluenceCache = {NewCell (State.arctanInfluenceCache)}
 	  
-	     self.manhatTerrCache = cacheInfo(array:{NewCell {ListToArray (State.manhatTerrCache.array)}}
+	     self.manhatTerrCache = cacheInfo1(array:{NewCell {ListToArray (State.manhatTerrCache.array)}}
 	                                      clusterArray:{NewCell {ListToArray (State.manhatTerrCache.clusterArray)}}
 	  								      clusters:{NewCell (State.manhatTerrCache.clusters)}  )
 									   
@@ -76,7 +80,9 @@ class PBoard from SmartBoard.sBoard
 								  	      clusters:{NewCell (State.arctanTerrCache.clusters)}  )
 										  
 	  else
-	  
+	     
+		 %Normal init
+		 
 	     SmartBoard.sBoard, init( Size InitialStones )
          self.influenceCacheBoard = cacheBoard(white:{NewCell _} black:{NewCell _})
          self.influenceCacheList = cacheList(white:{NewCell _} black:{NewCell _})
@@ -88,7 +94,23 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth getState(State)
-   
+      % The State of a playBoard is everything that you need to construct the current playBoard in a stateless form.
+	  % It contains:
+	  %    -state.intialStones  =  information about all stones on the board
+	  %    -state.clusters  =  all the cluster caches made by Smart Board, usually stored in an Array. In state, it is
+	  %                          stored as a list.
+	  %    -state.size  =  size of the board
+	  %    -state.influenceCacheBoard  =  the simpleBoard that contains manhat influence information. In state, it is
+	  %                                     stored as a list.
+	  %    -state.influenceCacheList   =  similar to CacheBoard already in list form
+	  %    -state.arctanInfluenceCache  =  a list containing the arctanInfluence at each location
+	  %    -state.manhatTerrCache  =  a bunch of information converted into three lists about manhat territory
+	  %    -state.arctanTerrCache  =  a bunch of information converted into three lists about arctan territory
+	  %
+	  % The state should be used if information about the board needs to be sent across a network. Oz gives nice ways to
+	  %  efficiently work with stateless data acrosss a network, so this is MUCH better than sending the stateful board object.
+	  %
+	  
       fun{ArrayToList A}
 	     Low = {Array.low A}
 		 High = {Array.high A}
@@ -136,10 +158,10 @@ class PBoard from SmartBoard.sBoard
                     arctanInfluenceCache: @(self.arctanInfluenceCache)
 					manhatTerrCache: cacheInfo(array: {ArrayToList @(self.manhatTerrCache.array)}
 					                           clusterArray:{ArrayToList @(self.manhatTerrCache.clusterArray)}
-											   clusters:@(self.manhatTerrCache).clusters  )
+											   clusters:@(self.manhatTerrCache.clusters)  )
                     arctanTerrCache: cacheInfo(array: {ArrayToList @(self.arctanTerrCache.array)}
 					                           clusterArray:{ArrayToList @(self.arctanTerrCache.clusterArray)}
-											   clusters:@(self.arctanTerrCache).clusters  )
+											   clusters:@(self.arctanTerrCache.clusters)  )
                     )
    end
    
@@ -348,6 +370,9 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth fillCaches
+   % This should be made better, along with the clean up of all the old nasty stuff below this.
+   % It was made quickly to test the distributed lobes and should be improved upon. It just doesn't
+   %    look clean... 
      {self wipeCache}
 	  
 	 %Refill the cache
