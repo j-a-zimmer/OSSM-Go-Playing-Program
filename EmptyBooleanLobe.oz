@@ -41,7 +41,7 @@ class BooleanLobe from EmptyLobe.lobe
       skip
    end
 
-   meth formulateWeights
+   meth fillValues
       Board = {self getBoard($)}
 	  Col = {self getCol($)}
 	  fun{Recurs R C}

@@ -11,11 +11,12 @@ define
 	  % Methods that are part of the lobes life cycle:
 	  %    run              -- outer shell of life cycle, runs forever
 	  %    waitForUpdate    -- Holds execution until Update is set to a value then clears atrributes/updates Board
-	  %    formulateWeights -- The actual work that a lobe does, a thread is made to run this that may be terminated
+	  %    fillValues       -- The actual work that a lobe does, a thread is made to run this that may be terminated
 	  %                           if an update comes before this finishes executing.
 	  % Methods for use by the brain:
 	  %    getValues  -- getter for values
 	  %    update     -- updates board and then clears the update cell
+	  %    getDone    -- Done will be set to true when the lobe finishes executing fillValues
 	  %
 	  % Methods for use by subclasses:
 	  %    lookAhead  -- plays a piece on the board, evaluates the board with some function and then resets to previous Board state
@@ -35,8 +36,8 @@ define
 	  %                                                   /\                   |               |________________________|
 	  %                                                   |                    |                           |
 	  %                                                   |               _____\/____                      \/
-	  %                                                   |              | Formulate |                     |
-	  %                                                   /\             |  Weights  |                     |
+	  %                                                   |              |    Fill   |                     |
+	  %                                                   /\             |   Values  |                     |
 	  %                                                   |              |___________|                     \/
 	  %                                                   |                                                |
 	  %                                                   \ <==== <==== <==== <==== <==== <==== <==== <==== / 
@@ -55,6 +56,7 @@ define
 		   Values
 		   Update
 		   WorkingThread
+		   Done
 		   
       meth init()
          thread {self run} end
@@ -65,7 +67,8 @@ define
 		 try
             thread	
 			   WorkingThread := {Thread.this}
-			   {self formulateWeights} 
+			   {self fillValues} 
+			   Done := true
             end
 		 catch A then {System.show caughtErrorInEmptyLobe#A} 
 		 finally {self run} end
@@ -80,13 +83,13 @@ define
 		 WorkingThread := _
 	     Board := {New PlayBoard.pBoard init(Upd.state.size Upd.state.initialStones Upd.state)}
 		 Values := nil
+		 Done := false
 		 Col := Upd.color
 		 Update := _
 	  end
 	  
-	  meth formulateWeights
-	     %
-	     % FormulateWeights is the only method that should be extended by child classes (lobes)
+	  meth fillValues
+	     % FillValues is the only method that should be extended by child classes (lobes)
 		 % This method needs to set the cell Values to whatever rankings the lobe gives.
 		 %
 		 % Preconditions:
@@ -106,7 +109,17 @@ define
 		 %         before this finishes executing. Once we recieve an update, we dont care about the
 		 %         result of this method.
 		 
-	     Values := nil   %it is already nil but I wanted to put some body in this method
+	     Values := {self formulateWeights(@Board @Col $)} %Lobes were originally not distributed and
+		                                                  % made to work on a function call with these
+														  % parameters. To save time in changing every
+														  % lobe that works this way. fillValues defaults
+														  % as a wrapper to the old method. New lobes
+														  % should extend fillValues, not formulateWeights
+	  end
+	  
+	  meth formulateWeights(Board Col ?Lst)
+	     % This method exists to save Ben from having to edit a bunch of lobe files.
+	     Lst = nil
 	  end
 	  
 	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -124,6 +137,9 @@ define
 		 end
 	  end
 	  
+	  meth getDone(Ret)
+	     Ret = @Done
+	  end
 	  meth update(TheUpdate)
 	     % TheUpdate should be of the form:   someRecord(color:TheColorToRankFor  state:TheState)
 		 @Update = TheUpdate
