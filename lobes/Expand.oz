@@ -1,5 +1,5 @@
 functor
-   import EmptyLobe Browser
+   import EmptyLobe Browser System
    export Expand
 define
    class Expand from EmptyLobe.lobe
@@ -70,6 +70,7 @@ define
             end
          end
       in
+	     {System.show {Board getInfluence(4 4 $)}}
 	     Lst = {Glue {NoStones {GetZeroInfl $}}}
       end
 

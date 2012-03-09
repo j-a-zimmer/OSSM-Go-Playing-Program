@@ -56,22 +56,22 @@ define
 		   Values
 		   Update
 		   WorkingThread
-		   Done
+		   Done %This value is not needed for a loe to function correctly but allows the brain to see whether a
+		        %  lobe completely finished its fillValues.
 		   
-      meth init()
-         thread {self run} end
+      meth init
+         skip
       end
 	  
 	  meth run
 	     {self waitForUpdate}
-		 try
-            thread	
-			   WorkingThread := {Thread.this}
-			   {self fillValues} 
-			   Done := true
-            end
-		 catch A then {System.show caughtErrorInEmptyLobe#A} 
-		 finally {self run} end
+         thread	
+		   WorkingThread := {Thread.this}
+		   {self fillValues}
+		   Done := true
+		   {Thread.suspend {Thread.this $}}
+         end
+		 {self run}
 	  end
 	  
 	  meth waitForUpdate
@@ -79,7 +79,9 @@ define
 	  in
 		 %Should wait here until @Update, namely Upd, is determined
 		 {Wait Upd}
-		 if {IsDet @WorkingThread} andthen {Thread.state @WorkingThread}\=terminated then {Thread.terminate @WorkingThread} end
+		 if {IsDet @WorkingThread} then 
+		    {Thread.terminate @WorkingThread} 
+		 end
 		 WorkingThread := _
 	     Board := {New PlayBoard.pBoard init(Upd.state.size Upd.state.initialStones Upd.state)}
 		 Values := nil
@@ -113,8 +115,7 @@ define
 		                                                  % made to work on a function call with these
 														  % parameters. To save time in changing every
 														  % lobe that works this way. fillValues defaults
-														  % as a wrapper to the old method. New lobes
-														  % should extend fillValues, not formulateWeights
+														  % as a wrapper to the old method.
 	  end
 	  
 	  meth formulateWeights(Board Col ?Lst)
@@ -132,7 +133,7 @@ define
 	     if {IsDet R} then
 		    Ret = R
 		 else
-		    {System.show self}
+		    {System.show self#getValuesInEmptyLobe}
 		    Ret = nil
 		 end
 	  end

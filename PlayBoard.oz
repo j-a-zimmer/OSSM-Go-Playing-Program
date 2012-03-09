@@ -133,7 +133,7 @@ class PBoard from SmartBoard.sBoard
 			   Lst := {B getWeight(R C $)}|(@Lst)
 			end
          end
-	     @Lst
+	     {List.reverse @Lst}
 	  end
    
       InitialStones = {NewCell nil}

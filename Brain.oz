@@ -34,7 +34,7 @@ define
          proc {LobeInitializer List WList ?R}
             case List
             of Head|Tail then
-			   L = {New Head init()}
+			   L = {New Head init}
 			in
 			   thread {L run} end
                {LobeInitializer Tail L|WList R}
