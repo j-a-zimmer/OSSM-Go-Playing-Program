@@ -378,13 +378,17 @@ class PBoard from SmartBoard.sBoard
 	 %Refill the cache
       {self influence(white _)}
 	  {self influence(black _)}
-	  (self.arctanInfluenceCache) := {ArctanInfl.findInfl self}
-	  {self getArctanTerrCluster(1 1 _)}
-	  {self getManhatTerrCluster(1 1 _)}
+	  {self maybeFillArctanInfl}
+	  {self maybeFillManhatTerrArray}
+	  {self maybeFillManhatTerrClusters}
+	  {self maybeFillArctanTerrArray}
+	  {self maybeFillArctanTerrClusters}
    end
    
    %%%%  EVERYTHING BELOW HERE IS OLD CACHING STUFF THAT NEEDS TO BE UPDATED OR REMOVED  %%%%
    %%%% influence, getArctanTerrCluster, and getManhatTerrCluster methods are used above %%%%
+   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Manhat Influence%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
    
    %% Gets influenced positions due to a single stone
    meth getInfluencedPositions(R C Clr $)
@@ -495,11 +499,16 @@ class PBoard from SmartBoard.sBoard
       end
    end
    
-   
-   meth getArctanInfl(R C ?ClrInf)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Arctan influence%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+   meth maybeFillArctanInfl
       if {Not {IsDet @(self.arctanInfluenceCache)}} then 
          (self.arctanInfluenceCache) := {ArctanInfl.findInfl self}
       end
+   end
+
+   meth getArctanInfl(R C ?ClrInf)
+      {self maybeFillArctanInfl}
 	  ClrInf = {List.nth @(self.arctanInfluenceCache) R+(C-1)*{self size($)} }
    end
 
@@ -513,36 +522,47 @@ class PBoard from SmartBoard.sBoard
    %      getArctanTerrCluster
    %      getArctanTerrClusters
    %      getArctanTerr
-   
+   %
+   %   It also contains methods to fill the caches involved if they aren't
+   %     already filled:
+   %       -maybeFillArctanTerrArray    -maybeFillManhatTerrArray
+   %       -maybeFillArctanTerrClusers  -maybeFillManhatTerrClusters
+   %
    %   They give an array of control over the entire board,
    %             a cluster of all spaces in a Psuedo Territory, 
    %             a list of all territory clusters on the board, and
    %             the color controlling a specific point
-   
+   %
    %   These 4 things are defined using Manhattan influence and Arctan Influence.
-   
+   %
    %   Arctan influence is generally more accurate towards the start of the game
    %      and manhattan better in late game.
-   
+   %
    %   The majority of the code implementng these is in PseudoTerritory.oz
-   
+   %
    %   The PlayBoard will maintain a cache of the array of control, which is cleared each turn
    %   It does not cache the clusters, but uses the cached array to find them
    
-   
-   meth getManhatTerrArray(?Ary)
+ %%%%%%%%%%%%%%%%%%%%% Manhat Territory%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+   meth maybeFillManhatTerrArray
       if {Not {IsDet @((self.manhatTerrCache).array)}} then 
          ((self.manhatTerrCache).array) := {PseudoTerritory.findTerritoryManhat self $}
       end
+   end
+   
+   meth getManhatTerrArray(?Ary)
+      {self maybeFillManhatTerrArray}
 	  Ary = @((self.manhatTerrCache).array)
    end
    
-   meth getManhatTerrCluster(R C ?Clst)
-      Ary = {self getManhatTerrArray($)}
-	  Size = {self size($)}
-   in
+   meth maybeFillManhatTerrClusters
       if {Not {IsDet @((self.manhatTerrCache).clusterArray)}} then
+	     Ary = {self getManhatTerrArray($)}
+	     Size = {self size($)}
+	  in
 	     ((self.manhatTerrCache).clusterArray) := {NewArray Size+1 (Size+1)*Size+1 nil}
+		 ((self.manhatTerrCache).clusters) := nil
 	     for R in 1..Size do
 		    for C in 1..Size do
 			   if {Get @((self.manhatTerrCache).clusterArray) R*Size+C}==nil then
@@ -556,7 +576,11 @@ class PBoard from SmartBoard.sBoard
 			end
 		 end
 	  end
-	  Clst = {Get @((self.manhatTerrCache).clusterArray) R*Size+C}
+   end
+   
+   meth getManhatTerrCluster(R C ?Clst)
+      {self maybeFillManhatTerrClusters}
+	  Clst = {Get @((self.manhatTerrCache).clusterArray) R*{self size($)}+C}
    end
    
    meth getManhatTerrClusters(?CLst)
@@ -570,19 +594,26 @@ class PBoard from SmartBoard.sBoard
 	  Col = {Get Ary R*{self size($)}+C}
    end
    
-   meth getArctanTerrArray(?Ary)
+ %%%%%%%%%%%%%%%%%%%%%%%%%Arctan Territory%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+   meth maybeFillArctanTerrArray
       if {Not {IsDet @((self.arctanTerrCache).array)}} then 
          ((self.arctanTerrCache).array) := {PseudoTerritory.findTerritoryArctan self $}
       end
+   end
+   
+   meth getArctanTerrArray(?Ary)
+      {self maybeFillArctanTerrArray}
 	  Ary = @((self.arctanTerrCache).array)
    end
    
-   meth getArctanTerrCluster(R C ?Clst)
-      Ary = {self getArctanTerrArray($)}
-	  Size = {self size($)}
-   in
+   meth maybeFillArctanTerrClusters
       if {Not {IsDet @((self.arctanTerrCache).clusterArray)}} then
+	     Ary = {self getArctanTerrArray($)}
+	     Size = {self size($)}
+	  in
 	     ((self.arctanTerrCache).clusterArray) := {NewArray Size+1 (Size+1)*Size+1 nil}
+		 ((self.arctanTerrCache).clusters) := nil
 	     for R in 1..Size do
 		    for C in 1..Size do
 			   if {Get @((self.arctanTerrCache).clusterArray) R*Size+C}==nil then
@@ -596,7 +627,11 @@ class PBoard from SmartBoard.sBoard
 			end
 		 end
 	  end
-	  Clst = {Get @((self.arctanTerrCache).clusterArray) R*Size+C}
+   end
+   
+   meth getArctanTerrCluster(R C ?Clst)
+      {self maybeFillArctanTerrClusters}
+	  Clst = {Get @((self.arctanTerrCache).clusterArray) R*{self size($)}+C}
    end
    
    meth getArctanTerrClusters(?CLst)

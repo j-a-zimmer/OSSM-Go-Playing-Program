@@ -127,6 +127,12 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %** local variable Browser used only once
 %**
 %** in file "./lobes/Expand.oz", line 2, column 20
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./lobes/Expand.oz", line 2, column 28
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
@@ -570,21 +576,19 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %**
 %** in file "./JAZTools.oz", line 255, column 9
 % -------------------- accepted
-Mozart Compiler 1.4.0 (20080703) playing Oz 3
-
 %%% feeding file PlayBoard.oz
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable StoneList
 %**
-%** in file "./PlayBoard.oz", line 412, column 6
+%** in file "./PlayBoard.oz", line 416, column 6
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable ClusterList
 %**
-%** in file "./PlayBoard.oz", line 412, column 16
+%** in file "./PlayBoard.oz", line 416, column 16
 
 %******************** binding analysis warning ******************
 %**

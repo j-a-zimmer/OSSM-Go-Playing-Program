@@ -70,7 +70,6 @@ define
             end
          end
       in
-	     {System.show {Board getInfluence(4 4 $)}}
 	     Lst = {Glue {NoStones {GetZeroInfl $}}}
       end
 
