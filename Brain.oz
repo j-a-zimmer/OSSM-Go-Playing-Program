@@ -15,7 +15,7 @@ import OS JAZTools AIGui PlayBoard Browser System
          AggressiveExpand IncreaseArcInfl Colonize
 		 LibertyIncrease DontFillInEyes
 		 TerritorySeal ChangeNumTerritories
-		 IncreaseTerritorySpace
+		 IncreaseTerritorySpace TerritoryDifference
          
 export Brain
 
@@ -45,7 +45,6 @@ define
                            [AggressiveExpand.aggressiveExpand 
 						    Background.background 
 						    BorderSeal.borderSeal 
-							%ChangeNumTerritories.changeNumTerritories
 		 				    ClusterAttack.clusterAttack 
                             ClusterDefend.clusterDefend 
 							Colonize.colonize
@@ -55,13 +54,13 @@ define
 							DontFillInEyes.dontFillInEyes
 							Expand.expand 
 							Fork.fork				
-                            IncreaseArcInfl.increaseArcInfl
-                            %IncreaseTerritorySpace.increaseTerritorySpace							
+                            IncreaseArcInfl.increaseArcInfl					
                             Killer.killer 
 							LibertyCheck.libertyCheck
 							LibertyIncrease.libertyIncrease
 				 		    MakeEye.makeEye 
 				 		    Suicide.suicide
+							TerritoryDifference.territoryDifference
 							TerritorySeal.territorySeal
                             TerritorySuicide.territorySuicide 
 					 	    Threaten.threaten] nil $}
@@ -71,12 +70,12 @@ define
 		        [ threaten(early:0.1 middle:2.0 late:2.0 )
 				  territorySuicide(early:0.0 middle:0.0 late:25.0 )
 				  territorySeal(early:0.25 middle:0.5 late:1.0)
+				  territoryDifference(early:0.0 middle:0.5 late:1.0)
 				  suicide(early:225.0 middle:225.0 late:225.0 )
 				  makeEye(early:0.1 middle:0.25 late:0.5 )
 				  libertyIncrease(early:10.0 middle:10.0 late:10.0)
 				  libertyCheck(early:5.0 middle:5.0 late:5.0 )
 				  killer(early:100.0 middle:100.0 late:100.0 )
-				  %increaseTerritorySpace(early:0.5 middle:0.5 late:0.0)
 				  increaseArcInfl(early:1.0 middle:0.5 late:0.0)
 				  fork(early:0.0 middle:5.0 late:5.0 )
 				  expand(early:1.0 middle:0.5 late:0.0 )
@@ -87,7 +86,6 @@ define
 				  colonize(early:2.0 middle:0.5 late:0.0)
 				  clusterDefend(early:2.0 middle:3.0 late:5.0 )
 				  clusterAttack(early:0.0 middle:6.0 late:8.0 )
-				  %changeNumTerritories(early:0.5 middle:0.5 late:0.5)
 				  borderSeal(early:1.0 middle:2.0 late:1.5 )
 				  background(early:0.9 middle:0.1 late:0.0 )
 			      aggressiveExpand(early:0.0 middle:1.0 late:0.5 ) ]
@@ -206,7 +204,7 @@ define
 			   in
                   {Lobe formulateWeights({self.pBoard cloneBoard($)} self.color Weight)}
 				  EndTime={Time.time}
-				  if EndTime-StartTime\=0 then {System.show {Label LobeWeight}#'took  '#{Time.time}-StartTime#'  seconds to execute'} end
+				  %if EndTime-StartTime\=0 then {System.show {Label LobeWeight}#'took  '#{Time.time}-StartTime#'  seconds to execute'} end
                   AdjustedWeight = {List.map Weight fun{$ (A#B#C)#V} (A#B#C)#(V*LobeWeight.GameTime) end}
                   if {IsDet self.gBoard} then
                      {self.gBoard passWeightInfo(Lobe AdjustedWeight)}
@@ -216,12 +214,12 @@ define
 			      {GetValues LobeT LobeWeightT}
 			   end
 			else
-			   {System.show 'Done Getting Values'}
+			   %{System.show 'Done Getting Values'}
 			   nil
 			end
          end % fun GetValues
       in
-	     {System.show 'Starting To Get Values'}
+	     %{System.show 'Starting To Get Values'}
          Lst = {JAZTools.weightedSort 
                    {JAZTools.compactList 
                        {List.flatten {GetValues self.lobes self.lobeWeights $}} 

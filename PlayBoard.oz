@@ -417,9 +417,26 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth getManhatTerr(R C ?Col)
+   
+      fun{IsOnTheBoard Board R C}
+         L = {Board size($)}+1
+      in
+         {And {And R>0 C>0} {And R<L C<L}}
+      end
+	  
       Ary = {self getManhatTerrArray($)}
    in
-	  Col = {Get Ary R*{self size($)}+C}
+      if {IsOnTheBoard self R C} then
+	     Col = if {Get Ary R*{self size($)}+C}==1 then
+	              black
+			   elseif{Get Ary R*{self size($)}+C}==~1 then
+			      white
+			   else
+			      vacant
+			   end
+	  else
+	     Col = nil
+      end
    end
    
    meth getArctanTerrArray(?Ary)
@@ -457,15 +474,26 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth getArctanTerr(R C ?Col)
+   
+      fun{IsOnTheBoard Board R C}
+         L = {Board size($)}+1
+      in
+         {And {And R>0 C>0} {And R<L C<L}}
+      end
+	  
       Ary = {self getArctanTerrArray($)}
    in
-	  Col = if {Get Ary R*{self size($)}+C}==1 then
-	           black
-			elseif{Get Ary R*{self size($)}+C}==~1 then
-			   white
-			else
-			   vacant
-			end
+      if {IsOnTheBoard self R C} then
+	     Col = if {Get Ary R*{self size($)}+C}==1 then
+	              black
+			   elseif{Get Ary R*{self size($)}+C}==~1 then
+			      white
+			   else
+			      vacant
+			   end
+	  else
+	     Col = nil
+      end
    end
    
 end %PBoard

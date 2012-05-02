@@ -10,10 +10,10 @@ define
       Down = {Board cluster(R C-1 $)}
       Right = {Board cluster(R-1 C $)}
    in
-      (Up==nil orelse (Up.color == Opposite.Col) orelse (Up.color == Col andthen {Length Up.liberties}==1 ))
-        andthen (Left==nil orelse (Left.color == Opposite.Col) orelse (Left.color == Col andthen {Length Left.liberties}==1 ))
-        andthen (Down==nil orelse (Down.color == Opposite.Col) orelse (Down.color == Col andthen {Length Down.liberties}==1 ))
-        andthen (Right==nil orelse (Right.color == Opposite.Col) orelse (Right.color == Col andthen {Length Right.liberties}==1 ))
+      (Up==nil orelse ((Up.color == Opposite.Col) andthen {Length Up.liberties}\=1) orelse (Up.color == Col andthen {Length Up.liberties}==1 ))
+        andthen (Left==nil orelse ((Left.color == Opposite.Col) andthen {Length Left.liberties}\=1) orelse (Left.color == Col andthen {Length Left.liberties}==1 ))
+        andthen (Down==nil orelse ((Down.color == Opposite.Col) andthen {Length Down.liberties}\=1) orelse (Down.color == Col andthen {Length Down.liberties}==1 ))
+        andthen (Right==nil orelse ((Right.color == Opposite.Col) andthen {Length Right.liberties}\=1) orelse (Right.color == Col andthen {Length Right.liberties}==1 ))
    end
    
    class Suicide from EmptyBooleanLobe.booleanLobe

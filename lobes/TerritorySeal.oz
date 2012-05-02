@@ -13,28 +13,27 @@ define
       meth formulateWeights(Board Col ?Lst)
 	     Temp = {NewCell nil}
          CLst = {Board getArctanTerrClusters($)}
-		 OpColNum = if Col==white then
-		               1
-					else 
-					   ~1
-					end
+		 OpCol = if Col==white then
+		            black
+				 else 
+				    white
+				 end
 	  in
 	     for Clu in CLst do
 		    if Clu.color==Col then
 			   %Walking through all of my clusters
 		       for (R#C) in (Clu.border) do
-			      %Walking through the border of my cluster
-			   
-			      NearbySpaces = {Board getManhattan(R#C 5 $)} 
-				  AdjSpaces = {Board getManhattan(R#C 1 $)}
+			      Up = {Board getArctanTerr(R C+1 $)}
+	              Left = {Board getArctanTerr(R+1 C $)}
+                  Down = {Board getArctanTerr(R C-1 $)}
+                  Right = {Board getArctanTerr(R-1 C $)}
 			   in
-			      if  %Requires it to have some enemy influence nearby
-					  {List.some NearbySpaces 
-			                    fun{$ R1#C1} 
-								   {Board getArctanTerr(R1 C1 $)}==OpColNum
-								end } then
-					 {Browser.browse territoryseal#R#C}
+			      %Walking through the border of my cluster
+			      if (Up == OpCol) orelse (Left == OpCol) orelse (Right == OpCol) orelse (Down == OpCol) then
 			         Temp := (R#C#Col)#1.0|@Temp
+				  else if (Up == vacant) orelse (Left == vacant) orelse (Right == vacant) orelse (Down == vacant) then
+				          Temp := (R#C#Col)#0.5|@Temp
+					   end
 				  end
 			   end
 			end
