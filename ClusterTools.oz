@@ -87,7 +87,7 @@ define
       else
 	 Helper = fun {$ C}
 	    if {Board cluster(C.stones.1.1 C.stones.1.2 $)}.color \= vacant then
-	       {Browser.browse errorInClusterToolsLine90}
+	       %{Browser.browse errorInClusterToolsLine90}
 		   false
 	    else
            {IsEye Board C.stones.1 Cluster.color $}

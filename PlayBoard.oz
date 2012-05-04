@@ -59,7 +59,7 @@ class PBoard from SmartBoard.sBoard
       StonesPlayed = SmartBoard.sBoard,numStones($)
       TotalSpaces = {Int.toFloat (self.playSize * self.playSize)}
     in
-      if (StonesPlayed >= {Float.toInt (TotalSpaces * 0.6)}) then
+      if (StonesPlayed >= {Float.toInt (TotalSpaces * 0.5)}) then
          R = late
       elseif (StonesPlayed >= {Float.toInt (TotalSpaces * 0.07)}) then
          R = middle

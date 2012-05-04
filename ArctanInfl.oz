@@ -11,12 +11,18 @@ define
       fun{SumAll R C}
 	     if R == {Board size($)} then
 		    if C == {Board size($)} then
-			   ((R#C#useless)#{SumAt R C 1 1 0.0})|nil
+			   if {Board get(R C $)}==black then ((R#C#useless)#10000.0)|nil 
+			   elseif {Board get(R C $)}==white then ((R#C#useless)#~10000.0)|nil 
+			   else ((R#C#useless)#{SumAt R C 1 1 0.0})|nil end
 			else
-			   ((R#C#useless)#{SumAt R C 1 1 0.0})|{SumAll 1 C+1}
+			   if {Board get(R C $)}==black then ((R#C#useless)#10000.0)|{SumAll 1 C+1} 
+			   elseif {Board get(R C $)}==white then ((R#C#useless)#~10000.0)|{SumAll 1 C+1}
+			   else ((R#C#useless)#{SumAt R C 1 1 0.0})|{SumAll 1 C+1} end
 			end
 	     else
-		    ((R#C#useless)#{SumAt R C 1 1 0.0})|{SumAll R+1 C}
+		    if {Board get(R C $)}==black then ((R#C#useless)#10000.0)|{SumAll R+1 C}
+			elseif {Board get(R C $)}==white then ((R#C#useless)#~10000.0)|{SumAll R+1 C}
+		    else ((R#C#useless)#{SumAt R C 1 1 0.0})|{SumAll R+1 C} end
 		 end
 	  end
 	  fun{SumAt R1 C1 R2 C2 RunningTotal}
