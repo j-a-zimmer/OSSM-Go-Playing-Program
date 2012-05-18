@@ -12,7 +12,7 @@ Pr = {JAZTools.setWriter System.showInfo}
 %%           row#col#distance#count#list
 %% where row,col,distance represent a black (white) stone that is.
 %% closest to the indexed position
-%% and list is a list of 
+%% and list is a list of
 %%           row#col#dist
 %% showing the coordinates and distance from the indexed position of all  
 %% black (white) stones within the influence radius of the indexed position 
@@ -100,7 +100,7 @@ class Board
         {For 0 L 1  proc {$ I} {Pc I 0} {Pc I L} end}
         {For 1 (L-1) 1 proc {$ I} {Pc 0 I} {Pc L I} end}
       end % PutBorders
-      in % in
+   in % in
         ExternalShow := true
         ExternalPutAction := PutAction
         self.playSize = Size

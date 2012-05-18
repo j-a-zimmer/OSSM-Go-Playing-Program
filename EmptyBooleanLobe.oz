@@ -4,15 +4,35 @@ functor
 define
    
 class BooleanLobe from EmptyLobe.lobe
-   % This class is ment to be extaneded by lobes that check every location individually.
-   % This will set any Global variables needed, then recursively walk the board applying
-   %   the check method, and adding the location to it its result list with the value
-   %   in check's result.
+
+   % The purpose of this class is to offer a nice semi-written lobe that can be extended
+   %   by lobes that follow the general outline:
+   %
+   %      for R#C in all board positions do
+   %          if A then
+   %             Values := (R#C#Col)#SomeNumber | (@Values)
+   %          else
+   %             skip
+   %          end
+   %     end
+   %        In english, this lobe should be extended by any subclass that just walks the
+   %           entire board and checks each location seperately coming up a value or nothing
+   %           at each loacation.
+   %
+   % It works similarly to the outline above but goes recursively (i.e. more efficiently) and 
+   %   uses no state or cells (Hooray)
+   %
+   % This lobe should be extended in up to two ways:
+   %    check  -- this method is applied on every location an returns whether or not it has a
+   %              value and what it is
+   %    setGlobals  -- this method is called before the lobe will check any where and gives the
+   %                   subclass a chance to set any global values it cares about and doesn't 
+   %                   want to recalculate
    
    meth check(Board R C Col ?Result)
       % This method will be apllied on every combination of R and C
 	  % It returns a tuple with (Boolean)#(Float)
-	  % If the boolean is true then the location is rated with the Float
+	  % If the boolean is true hen the location is rated with the Float
       Result = false#0.0
    end
    
@@ -20,36 +40,39 @@ class BooleanLobe from EmptyLobe.lobe
       %Can be used to set global variables before any locations are checked
       skip
    end
-   
-   meth formulateWeights(Board Col ?R)
-	  fun{Recurs Board R C Col}
+
+   meth fillValues
+      Board = {self getBoard($)}
+	  Col = {self getCol($)}
+	  fun{Recurs R C}
 	     Result = {self check(Board R C Col $)}
+		 Size = {Board size($)}
 	  in
 	     if Result.1 andthen Result.2\=0.0 then
-	        if R=={Board size($)} then
-               if C=={Board size($)} then
+	        if R==Size then
+               if C==Size then
 			      (R#C#Col)#Result.2|nil
 			   else
-			      (R#C#Col)#Result.2|{Recurs Board 1 C+1 Col}
+			      (R#C#Col)#Result.2|{Recurs 1 C+1}
 			   end
 			else
-	           (R#C#Col)#Result.2|{Recurs Board R+1 C Col}
+	           (R#C#Col)#Result.2|{Recurs R+1 C}
 		    end
 		 else
-			if R=={Board size($)} then
-			   if C=={Board size($)} then
+			if R==Size then
+			   if C==Size then
 			      nil
 		       else
-		          {Recurs Board 1 C+1 Col}
+		          {Recurs 1 C+1}
 			   end
 			else
-			   {Recurs Board R+1 C Col}
+			   {Recurs R+1 C}
 		    end
 	     end
 	  end
    in 
       {self setGlobals(Board Col)}
-      R = {Recurs Board 1 1 Col}
+      {self setValues( {Recurs 1 1} ) }
    end
 end
 

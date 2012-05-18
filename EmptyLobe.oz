@@ -1,21 +1,173 @@
 functor
-   import Browser
+   import Browser PlayBoard System
    export Lobe
 define
    class Lobe
-	  feat lookAhead: fun{$ R C Col Board Fun}
-	                     Retval
-	                  in
-	                     {Board play(R C Col)}
-		                 Retval = {Fun R C Col Board}
-						 {Board retractMove}
-						 Retval
-	                  end      
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  %  What this file contains  %
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  % This is the generic Lobe class that all other lobes should extend.
+	  %
+	  % Methods that are part of the lobes life cycle:
+	  %    run              -- outer shell of life cycle, runs forever
+	  %    waitForUpdate    -- Holds execution until Update is set to a value then clears atrributes/updates Board
+	  %    fillValues       -- The actual work that a lobe does, a thread is made to run this that may be terminated
+	  %                           if an update comes before this finishes executing.
+	  % Methods for use by the brain:
+	  %    getValues  -- getter for values
+	  %    update     -- updates board and then clears the update cell
+	  %    getDone    -- Done will be set to true when the lobe finishes executing fillValues
+	  %
+	  % Methods for use by subclasses:
+	  %    lookAhead  -- plays a piece on the board, evaluates the board with some function and then resets to previous Board state
+	  %    getBoard, getCol, setValues, getValues*
+	  %
+	  %                    *this was already listed as a method for the brain
+	  %
+	  %
+	  %%%%%%%%%%%%%%%%%%%%%
+	  %   How Lobes work  %
+	  %%%%%%%%%%%%%%%%%%%%%
+	  % A lobe is initialized and then spends its entire life in this cycle:
+	  %       ___________          ___________         ________         ______________          ________________________
+	  %      |           |        |  wait for |       | clear  |       |  Split into  |        |  Wait for update then  |
+	  %      |initialized|  ====> |   update  | ====> | values | ====> |  Two Threads |  ====> |   kill other thread    |
+	  %      |___________|        |___________|       |________|       |______________|        | if it didn't terminate |
+	  %                                                   /\                   |               |________________________|
+	  %                                                   |                    |                           |
+	  %                                                   |               _____\/____                      \/
+	  %                                                   |              |    Fill   |                     |
+	  %                                                   /\             |   Values  |                     |
+	  %                                                   |              |___________|                     \/
+	  %                                                   |                                                |
+	  %                                                   \ <==== <==== <==== <==== <==== <==== <==== <==== / 
+	  %                                                                                                    
+	  %
+	  %                                              A Beautiful Diagram by Ben
+	  %
+	  % At any point durin this cycle the brain may come in and read values and/or give an update to
+	  %  to the lobe. It is update to each lobe to decide whether to commit each value as soon as
+	  %  as possible, or doing them all at once.
+	  %
+	  
+	  
+	  attr Board 
+           Col
+		   Values
+		   Update
+		   WorkingThread
+		   Done
+		   
       meth init()
-	     skip
+         thread {self run} end
       end
-      meth formulateWeights(Board Col ?R)
-         R = nil
-      end
+	  
+	  meth run
+	     {self waitForUpdate}
+		 try
+            thread	
+			   WorkingThread := {Thread.this}
+			   {self fillValues} 
+			   Done := true
+            end
+		 catch A then {System.show caughtErrorInEmptyLobe#A} 
+		 finally {self run} end
+	  end
+	  
+	  meth waitForUpdate
+	     Upd = @Update
+	  in
+		 %Should wait here until @Update, namely Upd, is determined
+		 {Wait Upd}
+		 if {IsDet @WorkingThread} andthen {Thread.state @WorkingThread}\=terminated then {Thread.terminate @WorkingThread} end
+		 WorkingThread := _
+	     Board := {New PlayBoard.pBoard init(Upd.state.size Upd.state.initialStones Upd.state)}
+		 Values := nil
+		 Done := false
+		 Col := Upd.color
+		 Update := _
+	  end
+	  
+	  meth fillValues
+	     % FillValues is the only method that should be extended by child classes (lobes)
+		 % This method needs to set the cell Values to whatever rankings the lobe gives.
+		 %
+		 % Preconditions:
+		 %      -@Values is set to nil
+		 %      -@Board is the board that rankings should be based on
+		 %
+		 % Postconditions:
+		 %      -@Values is set to the list of rankings
+		 %            -it can be set as it this executes or at completetion
+		 %            -There is no guarnantee on when the brain will ask for values. If they aren't
+		 %              there or it is partial done, it will take the current value of Values.
+		 %      -Leave Board in whatever condition you want, it will be wiped when an update comes
+		 %
+	     % Other stuff:
+		 %      -This needs to always be in a state that problems will not be caused if its execution
+		 %         is stopped by an external thread. This will happen when the lobe recieves an update
+		 %         before this finishes executing. Once we recieve an update, we dont care about the
+		 %         result of this method.
+		 
+	     Values := {self formulateWeights(@Board @Col $)} %Lobes were originally not distributed and
+		                                                  % made to work on a function call with these
+														  % parameters. To save time in changing every
+														  % lobe that works this way. fillValues defaults
+														  % as a wrapper to the old method. New lobes
+														  % should extend fillValues, not formulateWeights
+	  end
+	  
+	  meth formulateWeights(Board Col ?Lst)
+	     % This method exists to save Ben from having to edit a bunch of lobe files.
+	     Lst = nil
+	  end
+	  
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  %% methods for use by the brain %%
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  
+	  meth getValues(Ret)
+	     R = @Values
+	  in
+	     if {IsDet R} then
+		    Ret = R
+		 else
+		    {System.show self}
+		    Ret = nil
+		 end
+	  end
+	  
+	  meth getDone(Ret)
+	     Ret = @Done
+	  end
+	  meth update(TheUpdate)
+	     % TheUpdate should be of the form:   someRecord(color:TheColorToRankFor  state:TheState)
+		 @Update = TheUpdate
+		 Update := _ %This doesn;t ruin the data that it just put in this record because that lobe stores the
+		             %  contents of the cell and waits for that, ':=' doesn't effect the content so the lobe
+					 %  still have the update, this just prepares it to wait for the next one.
+	  end
+	  
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  %%Extras for child classes to use%%
+	  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	  meth getBoard(B)
+	     B = @Board
+	  end
+	  meth getCol(C)
+	     C = @Col
+	  end
+	  meth setValues(V)
+	     Values := V
+	  end
+	  meth lookAhead(R C Fun Result)
+	     State
+	  in
+		 State = {(@Board) getState($)}
+         {(@Board) play(R C (@Col))}
+         Result = {Fun R C (@Col) (@Board)}
+		 Board := {New PlayBoard.pBoard init(State.size State.initialStones State)}
+	  end
+	  
    end
 end

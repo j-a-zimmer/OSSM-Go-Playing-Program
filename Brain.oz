@@ -23,13 +23,21 @@ define
    
    class Brain
       
-      feat size color pBoard gBoard talker human lobes lobeWeights genetic
+      feat size color pBoard gBoard 
+	       talker human lobes lobeWeights genetic
+		   workTime9: 3000
+		   workTime13: 4000
+		   workTime19: 5000
+		   workTimeOddSize: 5000
       
       meth init()
          proc {LobeInitializer List WList ?R}
             case List
             of Head|Tail then
-               {LobeInitializer Tail {New Head init()}|WList R}
+			   L = {New Head init()}
+			in
+			   thread {L run} end
+               {LobeInitializer Tail L|WList R}
             else R = WList end
          end
        in
@@ -41,7 +49,7 @@ define
          
          self.lobes = {LobeInitializer 
 		           %%%%% The order of this list is semi-important. It needs to be the reverse of the list below.
-				   %%%%% So I made it alphabetical, please keep it that way, or feel the wrath of Ben.
+				   %%%%% So I made it alphabetical, please keep it that way, or feel the wrath of Ben...
                            [AggressiveExpand.aggressiveExpand 
 						    Background.background 
 						    BorderSeal.borderSeal 
@@ -63,7 +71,8 @@ define
 							TerritoryDifference.territoryDifference
 							TerritorySeal.territorySeal
                             TerritorySuicide.territorySuicide 
-					 	    Threaten.threaten] nil $}
+					 	    Threaten.threaten
+							    ] nil $}
 						   
 		 % This list needs to be in the reverse order of the list above
 		 self.lobeWeights = 
@@ -88,7 +97,8 @@ define
 				  clusterAttack(early:0.0 middle:6.0 late:8.0 )
 				  borderSeal(early:1.0 middle:2.0 late:1.5 )
 				  background(early:0.9 middle:0.1 late:0.0 )
-			      aggressiveExpand(early:0.0 middle:1.0 late:0.5 ) ]
+			      aggressiveExpand(early:0.0 middle:1.0 late:0.5 ) 
+				     ]
       end
       
       meth initializeGenetic(GeneticID)
@@ -193,6 +203,17 @@ define
 
       meth ImportanceList(?Lst)
 	     GameTime = {self.pBoard phase($)}
+		 
+		 proc{UpdateAllLobes Lobes State}
+		    case Lobes
+			of L|T then
+			   {L update( updateInfo(color:self.color state:State) )}
+			   {UpdateAllLobes T State}
+			else
+			   skip
+			end
+		 end
+		 
          fun{GetValues Lobes LobeWeights}
 		    case Lobes#LobeWeights of (Lobe|LobeT)#(LobeWeight|LobeWeightT) then
 			   Weight
@@ -202,9 +223,8 @@ define
 			      StartTime = {Time.time}
 				  EndTime
 			   in
-                  {Lobe formulateWeights({self.pBoard cloneBoard($)} self.color Weight)}
-				  EndTime={Time.time}
-				  %if EndTime-StartTime\=0 then {System.show {Label LobeWeight}#'took  '#{Time.time}-StartTime#'  seconds to execute'} end
+                  {Lobe getValues(Weight)}
+				  if {Not {Lobe getDone($)}} then {System.show {Label LobeWeight}#' didnt finish in time. tisk tisk tisk'} end
                   AdjustedWeight = {List.map Weight fun{$ (A#B#C)#V} (A#B#C)#(V*LobeWeight.GameTime) end}
                   if {IsDet self.gBoard} then
                      {self.gBoard passWeightInfo(Lobe AdjustedWeight)}
@@ -214,12 +234,16 @@ define
 			      {GetValues LobeT LobeWeightT}
 			   end
 			else
-			   %{System.show 'Done Getting Values'}
+			   {System.show 'Done Getting Values'}
 			   nil
 			end
          end % fun GetValues
+		 
       in
-	     %{System.show 'Starting To Get Values'}
+	     {System.show 'Starting To Get Values'}
+		 {self.pBoard fillCaches}
+		 {UpdateAllLobes self.lobes {self.pBoard getState($)}}
+		 {self DelayBasedOnBoardSize}
          Lst = {JAZTools.weightedSort 
                    {JAZTools.compactList 
                        {List.flatten {GetValues self.lobes self.lobeWeights $}} 
@@ -233,6 +257,14 @@ define
                                        self.color 
                  )#0.4 ]
       end % meth Random
-	 
+	  
+	  meth DelayBasedOnBoardSize
+	     case {self.pBoard size($)}
+		 of 9 then {Delay self.workTime9}
+		 [] 13 then {Delay self.workTime13}
+		 [] 19 then {Delay self.workTime19}
+		 else {Delay self.workTimeOddSize} end
+	  end
+	  
    end % class Brain
 end

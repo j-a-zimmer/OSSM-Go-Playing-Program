@@ -12,7 +12,8 @@ define
          in
             case Colors.(Col) of (Rstone#Cstone#_)|_ then
                Cluster = {Board cluster(Rstone Cstone $)}
-               if {List.length Cluster.liberties} < 6 then 
+               if {List.length Cluster.liberties} < 6 then
+			   
 		          fun{LibDecrease R C Col Board}
 			         Cluster2 = {Board cluster(R C $)}
 				  in
@@ -21,9 +22,10 @@ define
                      else
                         {List.length Cluster.liberties} > {List.length Cluster2.liberties} 
                      end
-			      end			   
+			      end
+				  
 		       in
-                  {self.lookAhead R C Col Board LibDecrease}
+                  {self lookAhead(R C LibDecrease $)}
                else false
                end
             else
