@@ -32,6 +32,7 @@ class PBoard from SmartBoard.sBoard
    meth init(Size InitialStones State<=_) 
       %For information about what State is, see the getState method
 	  
+	  SmartBoard.sBoard, init( Size InitialStones )
 	  if {IsDet State} then
 	     
 		 %init if state is provided
@@ -58,9 +59,7 @@ class PBoard from SmartBoard.sBoard
 			end
 			B
 		 end
-      in
-         SmartBoard.sBoard, init( Size InitialStones _ State)
-	  
+      in	  
 	     % Set caching to values in State
 	  
          self.influenceCacheBoard = cacheBoard(white:{NewCell {ListToBoard State.influenceCacheBoard.white}} 
@@ -82,8 +81,6 @@ class PBoard from SmartBoard.sBoard
 	  else
 	     
 		 %Normal init
-		 
-	     SmartBoard.sBoard, init( Size InitialStones )
          self.influenceCacheBoard = cacheBoard(white:{NewCell _} black:{NewCell _})
          self.influenceCacheList = cacheList(white:{NewCell _} black:{NewCell _})
 	     self.arctanInfluenceCache = {NewCell _}
@@ -97,8 +94,6 @@ class PBoard from SmartBoard.sBoard
       % The State of a playBoard is everything that you need to construct the current playBoard in a stateless form.
 	  % It contains:
 	  %    -state.intialStones  =  information about all stones on the board
-	  %    -state.clusters  =  all the cluster caches made by Smart Board, usually stored in an Array. In state, it is
-	  %                          stored as a list.
 	  %    -state.size  =  size of the board
 	  %    -state.influenceCacheBoard  =  the simpleBoard that contains manhat influence information. In state, it is
 	  %                                     stored as a list.
@@ -147,8 +142,7 @@ class PBoard from SmartBoard.sBoard
 		    end
 	     end
 	  end
-      State = state(clusters: {ArrayToList self.clusters}
-	                initialStones: @InitialStones
+      State = state(initialStones: @InitialStones
 					size: {self size($)}
 	  
 	                influenceCacheBoard: cacheBoard(white:{BoardToList @(self.influenceCacheBoard.white)}
@@ -640,15 +634,26 @@ class PBoard from SmartBoard.sBoard
    end
    
    meth getArctanTerr(R C ?Col)
+   
+      fun{IsOnTheBoard Board R C}
+         L = {Board size($)}+1
+      in
+         {And {And R>0 C>0} {And R<L C<L}}
+      end
+	  
       Ary = {self getArctanTerrArray($)}
    in
-	  Col = if {Get Ary R*{self size($)}+C}==1 then
-	           black
-			elseif{Get Ary R*{self size($)}+C}==~1 then
-			   white
-			else
-			   vacant
-			end
+      if {IsOnTheBoard self R C} then
+	     Col = if {Get Ary R*{self size($)}+C}==1 then
+	              black
+			   elseif{Get Ary R*{self size($)}+C}==~1 then
+			      white
+			   else
+			      vacant
+			   end
+	  else
+	     Col = nil
+      end
    end
    
 end %PBoard

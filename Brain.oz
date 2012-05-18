@@ -1,6 +1,6 @@
 functor
 
-import OS JAZTools AIGui PlayBoard Browser System
+import OS JAZTools AIGui PlayBoard Browser System Connection
 
          %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
          % The lobes we are importing. %
@@ -24,56 +24,65 @@ define
    class Brain
       
       feat size color pBoard gBoard 
-	       talker human lobes lobeWeights genetic
+	       talker human genetic
+		   lobes lobeWeights
+		   host1
 		   workTime9: 3000
 		   workTime13: 5000
 		   workTime19: 7000
 		   workTimeOddSize: 5000
       
       meth init()
+	  
+	  % The order of this list is semi-important. It needs to be the reverse of the list below.
+      %    So I made it alphabetical, please keep it that way, or feel the wrath of Ben...               
+	    %          Name of Lobe                        # Where to host it
+		%         -------------------------------------#------------------
+	     LobeInfo = [(AggressiveExpand.aggressiveExpand)#host1
+				     (Background.background            )#here
+					 (BorderSeal.borderSeal            )#host1
+		 			 (ClusterAttack.clusterAttack      )#host1
+                     (ClusterDefend.clusterDefend      )#host1
+					 (Colonize.colonize                )#host1
+					 (Connect.connect                  )#host1
+			 		 (Diagonal.diagonal                )#host1
+					 (DiagonalDelay.diagonalDelay      )#host1
+					 (DontFillInEyes.dontFillInEyes    )#host1
+					 (Expand.expand                    )#host1
+					 (Fork.fork				           )#host1
+                     (IncreaseArcInfl.increaseArcInfl  )#host1	
+                     (Killer.killer                    )#host1
+					 (LibertyCheck.libertyCheck        )#host1
+					 (LibertyIncrease.libertyIncrease  )#host1
+				 	 (MakeEye.makeEye                  )#host1
+				 	 (Suicide.suicide                  )#host1
+					 (TerritorySeal.territorySeal      )#host1
+                     (TerritorySuicide.territorySuicide)#host1
+					 (Threaten.threaten                )#host1
+ 					     ]
+		 
          proc {LobeInitializer List WList ?R}
             case List
-            of Head|Tail then
+            of (Head#here)|Tail then   % make lobe on current CPU, local host
 			   L = {New Head init}
 			in
-			   thread {L run} end
+			   {L start}
                {LobeInitializer Tail L|WList R}
+			   
+			[] (Head#host1)|Tail then  % make lobe on first host
+			   L = {self.host1 hostLobe(Head init $)}
+			in
+               {LobeInitializer Tail L|WList R}
+			   
             else R = WList end
          end
        in
-         % Everything that used to be here is handled by 
-         %              initializer / setupBoard nowadays.
+	     self.host1 = {Connection.take 'oz-ticket://127.0.0.1:9000/h14293812#0'}
          self.human = false
          
          % Form the lobes list.
          
-         self.lobes = {LobeInitializer 
-		           %%%%% The order of this list is semi-important. It needs to be the reverse of the list below.
-				   %%%%% So I made it alphabetical, please keep it that way, or feel the wrath of Ben...
-                           [AggressiveExpand.aggressiveExpand 
-						    Background.background 
-						    BorderSeal.borderSeal 
-							%ChangeNumTerritories.changeNumTerritories
-		 				    ClusterAttack.clusterAttack 
-                            ClusterDefend.clusterDefend 
-							Colonize.colonize
-							Connect.connect
-			 		        Diagonal.diagonal 
-							DiagonalDelay.diagonalDelay
-							DontFillInEyes.dontFillInEyes
-							Expand.expand 
-							Fork.fork				
-                            IncreaseArcInfl.increaseArcInfl
-                            %IncreaseTerritorySpace.increaseTerritorySpace							
-                            Killer.killer 
-							LibertyCheck.libertyCheck
-							LibertyIncrease.libertyIncrease
-				 		    MakeEye.makeEye 
-				 		    Suicide.suicide
-							TerritorySeal.territorySeal
-                            TerritorySuicide.territorySuicide 
-					 	    Threaten.threaten
-							    ] nil $}
+         self.lobes = {LobeInitializer LobeInfo nil $}
 						   
 		 % This list needs to be in the reverse order of the list above
 		 self.lobeWeights = 
@@ -85,7 +94,6 @@ define
 				  libertyIncrease(early:10.0 middle:10.0 late:10.0)
 				  libertyCheck(early:5.0 middle:5.0 late:5.0 )
 				  killer(early:100.0 middle:100.0 late:100.0 )
-				  %increaseTerritorySpace(early:0.5 middle:0.5 late:0.0)
 				  increaseArcInfl(early:1.0 middle:0.5 late:0.0)
 				  fork(early:0.0 middle:5.0 late:5.0 )
 				  expand(early:1.0 middle:0.5 late:0.0 )
@@ -96,9 +104,8 @@ define
 				  colonize(early:2.0 middle:0.5 late:0.0)
 				  clusterDefend(early:2.0 middle:3.0 late:5.0 )
 				  clusterAttack(early:0.0 middle:6.0 late:8.0 )
-				  %changeNumTerritories(early:0.5 middle:0.5 late:0.5)
 				  borderSeal(early:1.0 middle:2.0 late:1.5 )
-				  background(early:0.9 middle:0.1 late:0.0 )
+				  background(early:0.9 middle:0.1 late:0.1 )
 			      aggressiveExpand(early:0.0 middle:1.0 late:0.5 ) 
 				     ]
       end
@@ -206,11 +213,17 @@ define
       meth ImportanceList(?Lst)
 	     GameTime = {self.pBoard phase($)}
 		 
-		 proc{UpdateAllLobes Lobes State}
+		 proc{UpdateAllLocalLobes Lobes Update}
+		    fun{IsLocal L}
+			   {IsObject L}
+			end
+		 in
 		    case Lobes
 			of L|T then
-			   {L update( updateInfo(color:self.color state:State) )}
-			   {UpdateAllLobes T State}
+			   if {IsLocal L} then
+			      {L update( Update )}
+			   end
+			   {UpdateAllLocalLobes T Update}
 			else
 			   skip
 			end
@@ -236,10 +249,12 @@ define
 			   nil
 			end
          end % fun GetValues
-		 
+		 Update
       in
 		 {self.pBoard fillCaches}
-		 {UpdateAllLobes self.lobes {self.pBoard getState($)}}
+		 Update = updateInfo(color:self.color state:{self.pBoard getState($)})
+		 {UpdateAllLocalLobes self.lobes Update }
+		 {self.host1 updateLobes(Update)}
 		 {self DelayBasedOnBoardSize}
          Lst = {JAZTools.weightedSort 
                    {JAZTools.compactList 

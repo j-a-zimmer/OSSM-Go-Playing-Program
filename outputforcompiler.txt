@@ -432,13 +432,13 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %**
 %** unused local variable GeneticID
 %**
-%** in file "./Brain.oz", line 130, column 9
+%** in file "./Brain.oz", line 137, column 9
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable GameTime
 %**
-%** in file "./Brain.oz", line 180, column 3
+%** in file "./Brain.oz", line 187, column 3
 
 %******************** binding analysis warning ******************
 %**
@@ -517,6 +517,18 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %** local variable Browser used only once
 %**
 %** in file "./EmptyLobe.oz", line 2, column 10
+
+%******************** binding analysis warning ******************
+%**
+%** local variable System used only once
+%**
+%** in file "./EmptyLobe.oz", line 2, column 28
+
+%******************** binding analysis warning ******************
+%**
+%** local variable Connection used only once
+%**
+%** in file "./EmptyLobe.oz", line 2, column 35
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 
@@ -576,19 +588,21 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %**
 %** in file "./JAZTools.oz", line 255, column 9
 % -------------------- accepted
+Mozart Compiler 1.4.0 (20080703) playing Oz 3
+
 %%% feeding file PlayBoard.oz
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable StoneList
 %**
-%** in file "./PlayBoard.oz", line 416, column 6
+%** in file "./PlayBoard.oz", line 410, column 6
 
 %******************** binding analysis warning ******************
 %**
 %** unused local variable ClusterList
 %**
-%** in file "./PlayBoard.oz", line 416, column 16
+%** in file "./PlayBoard.oz", line 410, column 16
 
 %******************** binding analysis warning ******************
 %**
@@ -728,13 +742,13 @@ Mozart Compiler 1.4.0 (20080703) playing Oz 3
 %**
 %** local variable R used only once
 %**
-%** in file "./SmartBoard.oz", line 343, column 6
+%** in file "./SmartBoard.oz", line 328, column 6
 
 %******************** binding analysis warning ******************
 %**
 %** local variable C used only once
 %**
-%** in file "./SmartBoard.oz", line 343, column 8
+%** in file "./SmartBoard.oz", line 328, column 8
 % -------------------- accepted
 Mozart Compiler 1.4.0 (20080703) playing Oz 3
 

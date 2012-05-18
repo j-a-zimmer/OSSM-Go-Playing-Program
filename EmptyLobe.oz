@@ -1,5 +1,5 @@
 functor
-   import Browser PlayBoard System
+   import Browser PlayBoard System Connection
    export Lobe
 define
    class Lobe
@@ -32,7 +32,7 @@ define
 	  %       ___________          ___________         ________         ______________          ________________________
 	  %      |           |        |  wait for |       | clear  |       |  Split into  |        |  Wait for update then  |
 	  %      |initialized|  ====> |   update  | ====> | values | ====> |  Two Threads |  ====> |   kill other thread    |
-	  %      |___________|        |___________|       |________|       |______________|        | if it didn't terminate |
+	  %      |___________|        |___________|       |________|       |______________|        |                        |
 	  %                                                   /\                   |               |________________________|
 	  %                                                   |                    |                           |
 	  %                                                   |               _____\/____                      \/
@@ -62,6 +62,10 @@ define
       meth init
          skip
       end
+	  
+	  meth start
+	     thread {self run} end
+	  end
 	  
 	  meth run
 	     {self waitForUpdate}
@@ -133,7 +137,6 @@ define
 	     if {IsDet R} then
 		    Ret = R
 		 else
-		    {System.show self#getValuesInEmptyLobe}
 		    Ret = nil
 		 end
 	  end
@@ -141,10 +144,10 @@ define
 	  meth getDone(Ret)
 	     Ret = @Done
 	  end
-	  meth update(TheUpdate)
-	     % TheUpdate should be of the form:   someRecord(color:TheColorToRankFor  state:TheState)
+	  meth update( TheUpdate )
+  	    % TheUpdate should be a record of the form:   someRecord(color:TheColorToRankFor  state:TheState)
 		 @Update = TheUpdate
-		 Update := _ %This doesn;t ruin the data that it just put in this record because that lobe stores the
+		 Update := _ %This doesn't ruin the data that it just put in this record because that lobe stores the
 		             %  contents of the cell and waits for that, ':=' doesn't effect the content so the lobe
 					 %  still have the update, this just prepares it to wait for the next one.
 	  end
