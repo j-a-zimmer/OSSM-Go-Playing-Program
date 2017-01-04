@@ -1,5 +1,6 @@
-The purpose of this document is to explain the structure and functions of
-current version of the Go program (5/16/12). 
+This ReadMe describes a project completed by several generations of students at the Oklahoma School of Science and Mathematics under my supervision.  It was written by Ben Grimmer.
+
+The purpose of this document is to explain the structure and functions of current version of the Go program (5/16/12).
 
 
 Table of Contents:
